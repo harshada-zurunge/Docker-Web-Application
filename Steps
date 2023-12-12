@@ -1,0 +1,11 @@
+Create app.js
+
+Create package.json
+
+Create a Dockerfile 
+
+Create a Jenkinsfile
+
+Create a jenkins pipeline job . Create new credentials and use username & password (Enter dockerhub username and dockerhub password)
+
+When you execute this job , the image will be pushed to the docker hub registry
