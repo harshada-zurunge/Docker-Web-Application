@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    triggers {
-        pollSCM('* * * * *')  // Poll every 5 minutes (adjust as needed)
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -12,21 +8,12 @@ pipeline {
             }
         }
 
-        stage('Build and Test') {
+        stage('Build and Push to DockerHub') {
             steps {
                 script {
-                    // Build Docker image
-                    docker.build('ci-cd-example')
-                }
-            }
-        }
-
-        stage('Push to Docker Registry') {
-            steps {
-                script {
-                    // Push Docker image to a registry (adjust registry URL and credentials)
-                    docker.withRegistry('https://hub.docker.com/', 'docker-registry-credentials') {
-                        docker.image('ci-cd-example').push()
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker-registry-credentials') {
+                        def dockerImage = docker.build('harshadazurunge/docker-web-application:latest')
+                        dockerImage.push()
                     }
                 }
             }
